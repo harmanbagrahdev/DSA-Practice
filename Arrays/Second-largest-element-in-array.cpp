@@ -1,15 +1,15 @@
 // second largest element in array
 
 // can be done by sorting 
-
+// T = O(n^2)
+// S = O(1)
 #include <bits/stdc++.h>
 using namespace std;
 
-// mistakes
-vector<int> bubbleSort(vector<int>& arr, int n) {
+vector<int>& bubbleSort(vector<int>& arr, int n) {
     for(int i = 0; i <= n-1; i++) {
 
-        for(int j = i; i <= n-2; i++) {
+        for(int j = 0; j <= n-2; j++) {
             if(arr[j] > arr[j+1]) {
                 swap(arr[j], arr[j+1]);
             }
@@ -19,15 +19,14 @@ vector<int> bubbleSort(vector<int>& arr, int n) {
     return arr;
 }
 
-void secLargestBySorting(vector<int>& arr, int n) {
-    arr = bubbleSort(arr, n);
+int secLargestBySorting(vector<int>& arr, int n) {
+    bubbleSort(arr, n);
     // return arr[n-2];
-    for(auto i: arr) {
-        cout << i << " ";
-    }
+    return arr[n-2];
 }
 
-// Some bugs may be present!
+// T = O(n)
+// S = O(1)
 int second_largest(vector<int>& arr, int n) {
     int largest = 0;
     for(int i = 0; i < n; i++) {
@@ -36,26 +35,37 @@ int second_largest(vector<int>& arr, int n) {
         }
     }
 
-    vector<int> diff(n);
-    for(int i = 0; i < n; i++) {
-        diff[i] = arr[largest] - arr[i];
-    }
+    // vector<int> diff(n);
+    // for(int i = 0; i < n; i++) {
+    //     diff[i] = arr[largest] - arr[i];
+    // }
 
-    int min_diff = -1;
+    int min_diff = -1; // no valid index
     for(int i = 0; i < n; i++) {
-        if(diff[i] < diff[min_diff] && diff[i] != 0) {
-            min_diff = i;
-        }
-        
-        // if(diff[i] == 0) continue;
-        // if(min_diff == -1 || diff[i] < diff[min_diff]) {
+        // if(diff[i] < diff[min_diff] && diff[i] != 0) {
         //     min_diff = i;
         // }
+        
+        // if(diff[i] == 0) continue; // skip largest element
+        
+        // if no valid index found, then replace min_diff with current index. If already some difference is initialised previously then check other index for min element!!
+        
+        // if(min_diff == -1 || diff[i] < diff[min_diff]) { 
+            //     min_diff = i;
+            // }
+            
+        if(i == largest) continue; // skip largest element
+                        //   largest      -  current <  largest  - element yet known with min_diff
+        if(min_diff == -1 || arr[largest] - arr[i] < arr[largest] - arr[min_diff]) { 
+            min_diff = i;
+        }
     }
 
-    int sec_largest = arr[min_diff];
+    // int sec_largest = arr[min_diff];
 
-    return sec_largest;
+    // return sec_largest;
+
+    return arr[min_diff];
 }
 
 int main() {
@@ -67,8 +77,7 @@ int main() {
         cin >> arr[i];
     }
 
-    // cout << "Second largest element in array : " << second_largest(arr, n) << endl;
-    // cout << "Second largest element in array : " << secLargestBySorting(arr, n) << endl;
-    secLargestBySorting(arr, n);
+    cout << "Second largest element in array : " << second_largest(arr, n) << endl;
+    cout << "Second largest element in array : " << secLargestBySorting(arr, n) << endl; 
 
 }

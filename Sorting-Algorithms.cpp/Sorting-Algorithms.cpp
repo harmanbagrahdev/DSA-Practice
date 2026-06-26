@@ -32,7 +32,7 @@ void bubble_sort(vector<int>& arr, int n) {
         bool swap = false;
 
         // check and swap adjacent elements
-        for(int j = i; j <= n-2; j++) {
+        for(int j = 0; j <= n-2; j++) {
             if(arr[j] > arr[j+1]) {
                 int temp = arr[j];
                 arr[j+1] = arr[j];
