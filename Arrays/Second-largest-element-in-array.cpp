@@ -1,5 +1,7 @@
 // second largest element in array
 
+// simply use the sort function
+
 // can be done by sorting 
 // T = O(n^2)
 // S = O(1)
