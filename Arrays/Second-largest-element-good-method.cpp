@@ -10,9 +10,10 @@ void secLargest(vector<int>& nums, int n) {
 
     for(int i = 0; i < n; i++) {
         if(nums[i] > largest) largest = nums[i];
-        else if(secondlargest < largest && secondlargest != INT_MIN) {
-            continue;
-        }
+    }
+
+    for(int i = 0; i < n; i++) {
+        if(nums[i]  largest && nums[i] != largest) secondlargest = nums[i]; 
     }
 }
 
