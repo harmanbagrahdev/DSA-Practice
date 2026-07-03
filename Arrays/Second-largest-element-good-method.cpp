@@ -13,7 +13,7 @@ void secLargest(vector<int>& nums, int n) {
     }
 
     for(int i = 0; i < n; i++) {
-        if(nums[i]  largest && nums[i] != largest) secondlargest = nums[i]; 
+        if(nums[i]  largest && nums[i] != largest) secondlargest = nums[i]; fdghjbk
     }
 }
 
