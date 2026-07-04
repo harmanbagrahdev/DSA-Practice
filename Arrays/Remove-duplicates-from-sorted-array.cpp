@@ -20,6 +20,23 @@ class Solution {
             }
             return st.size();
         }
+
+        int removeDuplicatesOptimal(vector<int>& nums) {
+            // first element is always unique -- pointer for unique element
+            int i = 0;
+
+            for(int j = 1; j < nums.size(); j++) {
+                // if current element is not same as last unique element, then move pointer for unique element forward
+                if(nums[j] != nums[i]) {
+                    i++;
+
+                    // place next unique element at next position
+                    nums[i] = nums[j];
+                }
+            }
+
+            return i+1; // size
+        }
     };
 
 
