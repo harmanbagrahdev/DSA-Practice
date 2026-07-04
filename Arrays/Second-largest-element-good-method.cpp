@@ -1,10 +1,11 @@
 // Second largest element in an array
 
-// review needed -- buggy algorithm needs to be fixed!
 #include <bits/stdc++.h>
 using namespace std;
 
-void secLargest(vector<int>& nums, int n) {
+// T = O(2n)
+// S = O(1)
+int secLargest(vector<int>& nums, int n) {
     int largest = nums[0];
     int secondlargest = nums[0];
 
@@ -13,8 +14,30 @@ void secLargest(vector<int>& nums, int n) {
     }
 
     for(int i = 0; i < n; i++) {
-        if(nums[i]  largest && nums[i] != largest) secondlargest = nums[i]; fdghjbk
+        if(nums[i] >= secondlargest && nums[i] < largest) secondlargest = nums[i];
     }
+    return secondlargest;
+}
+
+// similar method can be used for second smallest element
+// T = O(n)
+// S = O(1)  
+int secLargestOptimal(vector<int>& nums, int n) {
+    // can also use : largest = INT_MIN, secondLargest = INT_MIN;   If all elements are non-negative, if they are negative then set these values to a very small negative number;
+    int largest = nums[0];
+    int secondLargest = nums[0];
+
+    for(int i = 0; i < n; i++) {
+        if(nums[i] > largest) {
+            int temp = largest;
+            largest = nums[i];
+            secondLargest = temp;
+        }
+
+        else if(nums[i] > secondLargest) secondLargest = nums[i];
+    }
+
+    return secondLargest;
 }
 
 int main() {
@@ -26,5 +49,8 @@ int main() {
     }
 
     cout << "Second largest element : ";
+    cout << secLargest(nums, n) << endl;
 
+    cout << "Second largest element using optimal method : ";
+    cout << secLargestOptimal(nums, n);
 }
