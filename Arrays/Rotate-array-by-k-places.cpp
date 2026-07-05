@@ -26,7 +26,7 @@ class Solution {
 
 // T = O(n)
 // S = O(n)
-void reverse(vector<int>& nums, int k) {
+void rotate(vector<int>& nums, int k) {
     int n = nums.size();
 
     vector<int> temp(n);
@@ -40,32 +40,37 @@ void reverse(vector<int>& nums, int k) {
     }
 }
 
-// T = O(3*n) = O(n)
+// T = O(n) + O(k) + O(n-k) = O(2*n)
 // S = O(1)
-void reverseOptimal(vector<int>& nums, int k) {
+void rotateOptimal(vector<int>& nums, int k) {
     int n = nums.size();
     k = k % n;
-    int i = 0, j = n-1;
 
-    while(i < j){
-        swap(nums[i], nums[j]);
-        i++;
-        j--;
-    }
+    // int i = 0, j = n-1;
+    // while(i < j){
+    //     swap(nums[i], nums[j]);
+    //     i++;
+    //     j--;
+    // }
 
-    int p = 0, q = k-1;
-    while(p < q) {
-        swap(nums[p], nums[q]);
-        p++;
-        q--;
-    }
+    // int p = 0, q = k-1;
+    // while(p < q) {
+    //     swap(nums[p], nums[q]);
+    //     p++;
+    //     q--;
+    // }
 
-    int l = k, m = n-1;
-    while(l < m) {
-        swap(nums[l], nums[m]);
-        l++;
-        m--;
-    }
+    // int l = k, m = n-1;
+    // while(l < m) {
+    //     swap(nums[l], nums[m]);
+    //     l++;
+    //     m--;
+    // }
+
+    // This same can be done with reverse function!
+    reverse(nums.begin(), nums.end());
+    reverse(nums.begin(), nums.begin() + k);
+    reverse(nums.begin() + k, nums.end());
 
     for(auto i : nums) {
         cout << i << " ";
@@ -79,5 +84,5 @@ int main() {
     //     cin >> nums[i];
     // }
 
-    reverseOptimal(nums, k);
+    rotateOptimal(nums, k);
 }
