@@ -76,11 +76,13 @@ void insertion_sort(vector<int>& arr, int n) { // O(n^2)
     }
 }
 
+// T = O(n)
+// S = O(n)
 class Solution {
 public:
     // Function to merge two halves of the array
     void merge(vector<int>& arr, int low, int mid, int high) {
-        // Create temp arrays
+        // temp arrays
         vector<int> temp;
         int left = low, right = mid + 1;
 
@@ -110,16 +112,12 @@ public:
         if (low >= high)
             return;
 
-        // Find the middle index
         int mid = (low + high) / 2;
 
-        // Recursively sort left half
         mergeSort(arr, low, mid);
 
-        // Recursively sort right half
         mergeSort(arr, mid + 1, high);
 
-        // Merge the two sorted halves
         merge(arr, low, mid, high);
     }
 };
