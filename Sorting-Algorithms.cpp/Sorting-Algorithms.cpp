@@ -76,7 +76,7 @@ void insertion_sort(vector<int>& arr, int n) { // O(n^2)
     }
 }
 
-// T = O(n)
+// T = O( n * log(n) )
 // S = O(n)
 class Solution {
 public:
@@ -122,6 +122,38 @@ public:
     }
 };
 
+
+// T = O( n * log(n) )
+// S = O(1)
+
+int partitionArr(vector<int>& arr, int low, int high) {
+    int pivot = arr[high]; // pivot
+
+    int i = low - 1;
+
+    for(int j = low; j < high; j++) {
+        if(arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+
+    swap(arr[i+1], arr[high]);
+
+    return i+1; // return pivotIndex
+}
+
+void quickSort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pivotIndex = partitionArr(arr, low, high); // find pivot index
+
+        quickSort(arr, low, pivotIndex - 1); // sort before pivot
+
+        quickSort(arr, pivotIndex + 1, high); // sort after pivot
+    }
+}
+
+
 int main() {
     int n;
     cin >> n;
@@ -135,10 +167,17 @@ int main() {
     // bubble_sort(arr, n);
     // insertion_sort(arr, n);
     
-    Solution s;
-    s.mergeSort(arr, 0, n-1);
+    // Solution s;
+    // s.mergeSort(arr, 0, arr.size()-1);
+    // for(auto i : arr) {
+    //     cout << i << " ";
+    // }
+    // cout << endl;
+
+    quickSort(arr, 0, arr.size()-1);
     for(auto i : arr) {
         cout << i << " ";
     }
     cout << endl;
+    cout << "Program completed successfully.\n";
 }
