@@ -127,30 +127,30 @@ public:
 // S = O(1)
 
 int partitionArr(vector<int>& arr, int low, int high) {
-    int pivot = arr[high]; // pivot
+  int pivot = arr[low];
+  int i = low, j = high;
 
-    int i = low - 1;
+  while(i < j) {
+    
+    while(arr[i] <= pivot && i <= high - 1) i++; // high - 1 just because i++ could exceed array boundry, same for low + 1
 
-    for(int j = low; j < high; j++) {
-        if(arr[j] <= pivot) {
-            i++;
-            swap(arr[i], arr[j]);
-        }
-    }
+    while(arr[j] > pivot && j >= low + 1) j--;
+    
+    if(i < j) swap(arr[i], arr[j]);
+  }
+  
+  swap(arr[low], arr[j]); // swapping pivot with last element in subarray
 
-    swap(arr[i+1], arr[high]);
-
-    return i+1; // return pivotIndex
+  return j; // return pivotIndex
 }
 
 void quickSort(vector<int>& arr, int low, int high) {
-    if (low < high) {
-        int pivotIndex = partitionArr(arr, low, high); // find pivot index
+  if(low < high) {
+    int pivotIndex = partitionArr(arr, low, high);
 
-        quickSort(arr, low, pivotIndex - 1); // sort before pivot
-
-        quickSort(arr, pivotIndex + 1, high); // sort after pivot
-    }
+    quickSort(arr, low, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, high);
+  }
 }
 
 
