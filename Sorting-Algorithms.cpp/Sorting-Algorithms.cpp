@@ -88,19 +88,27 @@ public:
 
         // Merge two sorted halves
         while (left <= mid && right <= high) {
-            if (arr[left] <= arr[right])
-                temp.push_back(arr[left++]);
-            else
-                temp.push_back(arr[right++]);
+            if (arr[left] <= arr[right]) {
+                temp.push_back(arr[left]);
+                left++;
+            }
+            else {
+                temp.push_back(arr[right]);
+                right++;
+            }
         }
 
         // Copy remaining elements from left half
-        while (left <= mid)
-            temp.push_back(arr[left++]);
+        while (left <= mid) {
+            temp.push_back(arr[left]);
+            left++;
+        }
 
         // Copy remaining elements from right half
-        while (right <= high)
-            temp.push_back(arr[right++]);
+        while (right <= high) {
+            temp.push_back(arr[right]);
+            right++;
+        }
 
         // Copy sorted elements back to original array
         for (int i = low; i <= high; i++)

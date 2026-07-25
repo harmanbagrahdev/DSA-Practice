@@ -1,37 +1,90 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int partitionArr(vector<int>& arr, int low, int high) {
-  int pivot = arr[low];
-  int i = low, j = high;
+class mS {
+  public:
+    void merge(vector<int>& arr, int low, int mid, int high) {
+      vector<int> temp;
+      int left = low, right = mid+1;
 
-  while(i < j) {
+      while(left <= mid && right <= high) {
+        if(arr[left] <= arr[right]) {
+          temp.push_back(arr[left]);
+          left++;
+        }
+        else {
+          temp.push_back(arr[right]);
+          right++;
+        }
+      }
+
+      // Copy remaining elements
+      while(left <= mid) {
+        temp.push_back(arr[left]);
+        left++;
+      }
+      while(right <= high) {
+        temp.push_back(arr[right]);
+        right++;
+      }
+
+      // Copy sorted elements into original array
+      for(int i = low; i <= high; i++) {
+        arr[i] = temp[i - low];
+      }
+    }
+
+    void mergeSort(vector<int>& arr, int low, int high) {
+      if(low >= high) return;
+
+      int mid = (low + high) / 2;
+
+      mergeSort(arr, low, mid);
+      mergeSort(arr, mid + 1, high);
+
+      merge(arr, low, mid, high);
+    }
+};
+
+class qS {
+  public:
+    int partitionArr(vector<int>& arr, int low, int high) {
+      int pivot = arr[low];
+      int i = low, j = high;
     
-    while(arr[i] <= pivot && i <= high - 1) i++; // high - 1 just because i++ could exceed array boundry same for low + 1
-
-    while(arr[j] > pivot && j >= low + 1) j--;
+      while(i < j) {
+        while(arr[i] <= pivot && i <= high-1) i++;
     
-    if(i < j) swap(arr[i], arr[j]);
-  }
-  
-  swap(arr[low], arr[j]); // swapping pivot with last element in subarray
+        while(arr[j] > pivot && j >= low+1) j--;
+    
+        if(i < j) swap(arr[i], arr[j]);
+      }
+    
+      swap(arr[low], arr[j]);
+    
+      return j;
+    }
+    
+    void quickSort(vector<int>& arr, int low, int high) {
+      if(low < high) {
+        int partitionIndex = partitionArr(arr, low, high);
+    
+        quickSort(arr, low, partitionIndex - 1);
+        quickSort(arr, partitionIndex + 1, high);
+      }
+    }
+};
 
-  return j; // return pivotIndex
-}
-
-void quickSort(vector<int>& arr, int low, int high) {
-  if(low < high) {
-    int pivotIndex = partitionArr(arr, low, high);
-
-    quickSort(arr, low, pivotIndex - 1);
-    quickSort(arr, pivotIndex + 1, high);
-  }
-}
 
 int main() {
   vector<int> arr = {55,45,35,75,25,5};
 
-  quickSort(arr, 0, arr.size()-1);
+  // qS qs;
+  // qs.quickSort(arr, 0, arr.size()-1);
+
+  mS ms;
+  ms.mergeSort(arr, 0, arr.size()-1);
+
   for(auto i : arr) {
     cout << i << " ";
   } cout << endl;
