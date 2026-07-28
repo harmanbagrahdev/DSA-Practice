@@ -140,7 +140,7 @@ int partitionArr(vector<int>& arr, int low, int high) {
 
   while(i < j) {
     
-    while(arr[i] <= pivot && i <= high - 1) i++; // high - 1 just because i++ could exceed array boundry, same for low + 1
+    while(arr[i] <= pivot && i <= high - 1) i++; // high - 1 just because i++ could exceed array boundary, same for low + 1
 
     while(arr[j] > pivot && j >= low + 1) j--;
     

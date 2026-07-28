@@ -75,6 +75,24 @@ class qS {
     }
 };
 
+class selectionSort {
+  public:
+    void sS(vector<int> & arr) {
+      int n = arr.size();
+      for(int i = 0; i <= n-2; i++) {
+        int mini = i; // assume current indexed element as minimum
+
+        for(int j = i+1; j <= n-1; j++) {
+          if(arr[j] < arr[mini]) {
+            mini = j;
+          }
+        }
+
+        swap(arr[mini], arr[i]);
+      }
+    }
+};
+
 
 int main() {
   vector<int> arr = {55,45,35,75,25,5};
@@ -82,8 +100,11 @@ int main() {
   // qS qs;
   // qs.quickSort(arr, 0, arr.size()-1);
 
-  mS ms;
-  ms.mergeSort(arr, 0, arr.size()-1);
+  // mS ms;
+  // ms.mergeSort(arr, 0, arr.size()-1);
+
+  selectionSort s;
+  s.sS(arr);
 
   for(auto i : arr) {
     cout << i << " ";
