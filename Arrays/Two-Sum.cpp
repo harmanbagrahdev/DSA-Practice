@@ -51,7 +51,7 @@ string twoSumBetter(vector<int>& arr, int n) {
   return "No";
 }
 
-// Optimal Solution : two pointer and greedy approach
+// Optimal Solution (for variety 1 only and not for variety 2 as it will use extra space): two pointer and greedy approach
 // T = O(n * log(n) ) {for sorting} + O(n)
 // S = O(1) --> if there is no constraint on changing the array otherwise S = O(n)
 string twoSumOptimal(vector<int>& arr, int n) {
