@@ -36,7 +36,7 @@ void sortArrayOptimal(vector<int>& nums) {
   int mid = 0;
   int high = n-1;
 
-  while(mid < high) {
+  while(mid <= high) {
     if(nums[mid] == 0) {
       swap(nums[mid], nums[low]);
       mid++;
