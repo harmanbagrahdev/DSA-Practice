@@ -3,7 +3,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Brute force
+// Brute force (or we can use a sorting algorithm)
+// T = O(2*n)
+// S = O(1)
 void sortArray(vector<int>& nums) {
   int n = nums.size();
   int zeroes = 0, ones = 0, twos = 0;
@@ -25,8 +27,39 @@ void sortArray(vector<int>& nums) {
   } cout << endl;
 }
 
+// Optimal Approach : Dutch national flag algorithm
+// T = O(n)
+// S = (1)
+void sortArrayOptimal(vector<int>& nums) {
+  int n = nums.size();
+  int low = 0;
+  int mid = 0;
+  int high = n-1;
+
+  while(mid < high) {
+    if(nums[mid] == 0) {
+      swap(nums[mid], nums[low]);
+      mid++;
+      low++;
+    }
+
+    else if(nums[mid] == 1) {
+      mid++;
+    }
+
+    else if(nums[mid] == 2) {
+      swap(nums[mid], nums[high]);
+      high--;
+    }
+  }
+
+  for(auto i : nums) {
+    cout << i << " ";
+  } cout << endl;
+}
+
 int main() {
-  vector<int> nums = {0,0,1,2,1,0,1,2};
+  vector<int> nums = {0,0,1,2,1,0,1,2,1,2,0,1,2,1,0,1,2,1};
 
   sortArray(nums);
 }
