@@ -9,7 +9,7 @@ using namespace std;
 // S = O(1)
 int largestSum(vector<int>& arr) {
   int n = arr.size();
-  int sum = 0;
+  int maxi = INT16_MIN;
   int start, end;
 
   for(int i = 0; i < n; i++) {
@@ -18,20 +18,15 @@ int largestSum(vector<int>& arr) {
     for(int j = i; j < n; j++) {
       end = j;
 
-      int checkSum = 0;
+      int sum = 0;
       for(int k = start; k <= end; k++) {
-        checkSum += arr[k];
+        sum += arr[k];
+        maxi = max(maxi, sum);
       }
-      
-      if(sum < checkSum) {
-        sum = 0;
-        sum = checkSum;
-      }
-
     }
   }
 
-  return sum;
+  return maxi;
 }
 
 int main() {
