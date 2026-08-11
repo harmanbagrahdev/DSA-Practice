@@ -21,8 +21,29 @@ int stock(vector<int>& prices) {
   return maxProfit;
 }
 
+// DP : remembering past
+// Optimal Solution
+// T = O(n)
+// S = O(1)
+int stockBetter(vector<int>& prices) {
+  int n = prices.size();
+  int maxProfit = 0;
+  int mini = prices[0];
+
+  for(int i = 0; i < prices.size(); i++) {
+    int cost = prices[i] - mini; // computing difference between elements of prices array
+    maxProfit = max(maxProfit, cost);
+
+    mini = min(mini, prices[i]); // tracking minimum buying price
+  }
+
+  return maxProfit;
+}
+
 int main() {
   vector<int> prices = {7,1,5,3,6,4};
 
-  cout << stock(prices) << endl;
+  // cout << stock(prices) << endl;
+
+  cout << stockBetter(prices) << endl;
 }
