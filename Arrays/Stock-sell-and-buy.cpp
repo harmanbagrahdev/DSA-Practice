@@ -10,39 +10,15 @@ int stock(vector<int>& prices) {
   int n = prices.size();
   int maxProfit = 0;
 
-  // Loop through each day as a potential buy day
   for(int i = 0; i < prices.size(); i++) {
-    // Loop through each future day as a potential sell day
     for(int j = i + 1; j < prices.size(); j++) {
-      // Calculate the profit
       int profit = prices[j] - prices[i];
 
-      // Update max profit if this is higher
       maxProfit = max(maxProfit, profit);
     }
   }
 
-  // Return the maximum profit
   return maxProfit;
-
-
-
-
-  // int mini = 0;
-  
-  // for(int i = 0; i < n; i++) {
-  //   if(arr[i] < arr[mini]) mini = i;
-  // }
-  
-  // int maxi = mini;
-  // for(int i = mini; i < n; i++) {
-  //   if(arr[i] > arr[maxi]) maxi = i;
-  // }
-
-  // if(maxi > mini) return 0;
-
-  // return arr[maxi];
-  // //  - arr[mini];
 }
 
 int main() {
