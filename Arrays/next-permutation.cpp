@@ -29,10 +29,44 @@ vector<int> nextPermutation(vector<int>& nums) {
   return nums;
 }
 
+// Optimal Solution
+// T = O(3 * n)
+// S = O(1) --> auxilliary space
+vector<int> nextPermutationOptimal(vector<int>& nums) {
+  int n = nums.size();
+  int index = -1;
+
+  // find breakpoint
+  for(int i = n-2; i >= 0; i--) { // iterate from last second to first to find dictionary order
+    if(nums[i] < nums[i+1]) {
+      index = i;
+      break;
+    }
+  }
+
+  if(index == -1) {
+    reverse(nums.begin(), nums.end());
+    return nums;
+  }
+
+  for(int i = n-1; i >= 0; i--) {
+    if(nums[i] > nums[index]) {
+      swap(nums[i], nums[index]);
+      break;
+    }
+  }
+
+  reverse(nums.begin() + index + 1, nums.end()); // T = O(n) in worst case
+
+  return nums;
+}
+
 int main() {
   vector<int> nums = {1,3,2};
 
-  vector<int> ans =  nextPermutation(nums);
+  // vector<int> ans =  nextPermutation(nums);
+
+  vector<int> ans =  nextPermutationOptimal(nums);
   for(auto i : ans) {
     cout << i << " ";
   } cout << endl;
