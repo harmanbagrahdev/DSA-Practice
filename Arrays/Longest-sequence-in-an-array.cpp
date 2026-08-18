@@ -65,7 +65,7 @@ int longestSequenceBetter(vector<int>& nums) {
 }
 
 // Optimal solution in case of no collisions
-// T = O(n)
+// T = O(n) + O(2*n)
 // S = (n) --> in worst case when all elements are unique
 int longestSequenceOptimal(vector<int>& nums) {
   int longest = 1;
