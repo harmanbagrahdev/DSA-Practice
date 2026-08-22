@@ -47,37 +47,25 @@ int totalSubarraysBetter(vector<int>& nums, int k) {
   return cnt;
 }
 
-// Optimal solution
-// T = O()
-// S = O()
+// Optimal solution : do visit logic and do dry run if you can't recall in future!
+// T = O(n * log(n) )
+// S = O(n)
 int totalSubarraysOptimal(vector<int>& nums, int k) {
-  // the array contains negatives also so this will approach will fail! The optimal solution uses hash map and pre fix sum method!!
   int n = nums.size();
   int cnt = 0;
-  int left = 0;
-  int right = 0;
-  int sum = nums[0];
+  int preSum = 0;
+  unordered_map<int, int> mpp;
+  mpp[0] = 1;
 
-  while(right < n) {
-    // shrink
-    while(left <= right && sum > k) {
-      sum -= nums[left];
-      left++;
-    }
-
-    if(sum == k) cnt++;
-
-    right++; // move to add
-
-    // expand
-    if(right < n) {
-      sum += nums[right];
-    }
+  for(int i = 0; i < n ; i++) {
+    preSum += nums[i];
+    int rem = preSum - k;
+    cnt += mpp[rem];
+    mpp[preSum] += 1;
   }
 
   return cnt;
 }
-
 
 int main() {
   vector<int> nums = {3, 1, 2, 4};
