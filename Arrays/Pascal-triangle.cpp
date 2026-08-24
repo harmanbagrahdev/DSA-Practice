@@ -35,11 +35,12 @@ void printNthRowBrute(int n, int r, int N) {
 // T = O(n)
 // S = O(1)
 // Optimal approach
-void printNthRowOptimal(int n, int r, int N) {
-  int ans = 1;
+void printNthRowOptimal(int N) {
+  long long ans = 1;
   cout << ans << " ";
-  for(int i = 1; i < n; i++) {
+  for(int i = 1; i < N; i++) {
     ans = ans * (N - i);
+    ans = ans / i;
     cout << ans << " ";
   }
   cout << endl;
@@ -47,13 +48,20 @@ void printNthRowOptimal(int n, int r, int N) {
 
 
 // Type 3 : Given n, print the entire pascal's triangle
-
+void pascalTriangle(int n) {
+  for(int i = 1; i <= n; i++) {
+    printNthRowOptimal(i);
+  }
+}
 
 int main() {
-  int r = 3, n = 5;
+  int r = 3, n = 6;
   // cout << nCr(n - 1, r - 1) << endl;
 
   // printNthRowBrute(n - 1, r - 1, 3);
 
-  printNthRowOptimal(n-1, r-1, 3);
+  // int N = 6;
+  // printNthRowOptimal(N-1);
+
+  pascalTriangle(6);
 }
