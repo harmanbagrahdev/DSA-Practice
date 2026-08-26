@@ -55,22 +55,32 @@ vector<vector<int>> threeSumBetter(vector<int>& nums) {
 }
 
 // Optimal Solution
-// T = O()
-// S = O()
+// T = O(n^2)
+// S = O(1) --> auxilliary space
 vector<vector<int>> threeSumOptimal(vector<int>& nums) {
   int n = nums.size();
-  sort(nums.begin(), nums.end());
   vector<vector<int>> ans;
-  
-  for(int i = 0; i < n; i++) {
-    int j = i + 1;
-    int k = n-1-i;
-    while(j <= k) {
-      if(nums[i] + nums[j] + nums[k] == 0) {
-        ans.push_back({nums[i], nums[j], nums[k]});
-        j++;
-        k--;
-      }
+  sort(nums.begin(), nums.end()); // T = n * log(n)
+
+  for(int i = 0; i < n-1; i++) { // T = O(n)
+    if(i > 0 && nums[i] == nums[i-1]) continue;
+
+    int j = i+1;
+    int k = n-1;
+
+    while(j < k) { // T = O(n)
+        int sum = nums[i] + nums[j] + nums[k];
+
+        if(sum == 0) {
+          ans.push_back({nums[i], nums[j], nums[k]});
+          j++;
+          k--;
+          while(j < k && nums[j] == nums[j-1]) j++; // these two loops are to check if elements are same!    T = nearly constant
+          while(j < k && nums[k] == nums[k+1]) k--;
+        }
+
+        else if(sum < 0) j++;
+        else if(sum > 0) k--;
     }
   }
   
@@ -91,4 +101,6 @@ int main() {
     }
     cout << endl;
   } cout << endl;
+
+  cout << "end\n";
 }
