@@ -5,10 +5,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Brute force
+// Brute force : we are sorting arrays but putting them again in nums1 and nums2
 // T = O(n1 + n2) + O(n1 + n2)
 // S = O(n1 + n2)
-vector<int> mergeArrays(vector<int>& nums1, vector<int>& nums2) {
+void mergeArraysBrute(vector<int>& nums1, vector<int>& nums2) {
   int n1 = nums1.size();
   int n2 = nums2.size();
   vector<int> temp;
@@ -30,24 +30,24 @@ vector<int> mergeArrays(vector<int>& nums1, vector<int>& nums2) {
     if(i < n1) nums1[i] = temp[i];
     else nums2[i - n1] = temp[i];
   }
-
-  return nums1;
 }
 
-vector<int> mergeArraysOptimal_1(vector<int>& nums1, vector<int>& nums2) {
+// Optimal Solution 1
+// T = O( min(n1, n2) ) + O(n1 * loh(n1) ) + O(n2 * log(n2) )
+// S = O(1)
+void mergeArraysOptimal_1(vector<int>& nums1, vector<int>& nums2) {
   int n1 = nums1.size();
   int n2 = nums2.size();
 
-  int left = 0;
+  int left = n1-1;
   int right = 0;
   
-  while(left <= 0 && right < n2) {
+  while(left >= 0 && right < n2) {
     if(nums1[left] > nums2[right]) {
       swap(nums1[left], nums2[right]);
-      left++;
-      right--;
+      left--;
+      right++;
     }
-
     else break;
   }
 
@@ -55,23 +55,86 @@ vector<int> mergeArraysOptimal_1(vector<int>& nums1, vector<int>& nums2) {
   sort(nums2.begin(), nums2.end());
 }
 
+// Optimal Solution 2 : By gap method
+// T = O(log(n + m)) + O(n + m)
+// S = O(1)
+void swapGreater(vector<int>& nums1, vector<int>& nums2, int i, int j) {
+  if(nums1[i] > nums2[j]) swap(nums1[i], nums2[j]);
+}
+
+
+void mergeArraysOptimal_2(vector<int>& nums1, vector<int>& nums2) {
+  int n = nums1.size();
+  int m = nums2.size();
+
+  int len = n + m;
+  int gap = (len / 2) + (len % 2);
+  
+  while(gap > 0) {
+    int left = 0;
+    int right = left + gap;
+    while(right < len) {
+      // left in array 1 and right in array 2
+      if(left < n && right >= n) {
+        swapGreater(nums1, nums2, left, right - n);
+      }
+      // both in array 2
+      else if(left >= n) {
+        swapGreater(nums2, nums2, left - n, right - n);
+      }
+      // both in array 1
+      else {
+        swapGreater(nums1, nums1, left, right);
+      }
+
+      left++;
+      right++;
+    }
+
+    if(gap == 1) break;
+    gap = (gap / 2) + (gap % 2);
+  }
+
+}
+
+// Leetcode problem solution
+class Solution {
+  public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) { // m is number of real elements in nums1
+      int i = m-1;
+      int j = n-1;
+      int k = m + n - 1;
+  
+      while(j >= 0) {
+        if(i >= 0 && nums1[i] > nums2[j]) {
+          nums1[k--] = nums1[i--];
+        }
+        else {
+          nums1[k--] = nums2[j--];
+        }
+      }
+  }
+};
+
+
 int main() {
   vector<int> nums1 = {-5, -2, 4, 5, 0, 0, 0};
   vector<int> nums2 = {-3, 1, 8};
 
-  vector<int> ans = mergeArraysOptimal_1(nums1, nums2);
+  // mergeArraysBrute(nums1, nums2);
+  
+  // mergeArraysOptimal_1(nums1, nums2);
 
-  for(auto i : ans) {
-    cout << i << " ";
-  } cout << endl;
+  // mergeArraysOptimal_2(nums1, nums2);
 
-  // vector<int> ans = mergeArrays(nums1, nums2);
-
-  // for(auto i : ans) {
+  // for(auto i : nums1) {
   //   cout << i << " ";
   // } cout << endl;
 
   // for(auto i : nums2) {
   //   cout << i << " ";
   // } cout << endl;
+
+  Solution s;
+  s.merge(nums1, 3, nums2, 3);
 }
