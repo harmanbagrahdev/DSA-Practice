@@ -100,10 +100,10 @@ void mergeArraysOptimal_2(vector<int>& nums1, vector<int>& nums2) {
 // Leetcode problem solution
 class Solution {
   public:
-    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) { // m is number of real elements in nums1
-      int i = m-1;
-      int j = n-1;
-      int k = m + n - 1;
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+      int i = m-1; // m is number of real elements in nums1
+      int j = n-1; // n is the number of elements in nums2
+      int k = m + n - 1; // last index of nums1 (writer pointer)
   
       while(j >= 0) {
         if(i >= 0 && nums1[i] > nums2[j]) {
@@ -136,5 +136,9 @@ int main() {
   // } cout << endl;
 
   Solution s;
-  s.merge(nums1, 3, nums2, 3);
+  s.merge(nums1, 4, nums2, 3);
+
+  for(auto i : nums1) {
+    cout << i << " ";
+  } cout << endl;
 }
