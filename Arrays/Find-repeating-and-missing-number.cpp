@@ -76,6 +76,49 @@ vector<int> solutionOptimal_1(vector<int>& nums) {
   return {(int)repeating, (int)missing};
 }
 
+// Optimal Solution : with xor logic
+// T = O(n)
+// S = O(1)
+vector<int> solutionOptimal_2(vector<int>& nums) {
+  int n = nums.size();
+  int xr = 0;
+
+  for(int i = 0; i < n; i++) {
+    xr = xr ^ nums[i];
+    xr = xr ^ (i+1);
+  }
+
+  int bitNum = 0;
+  while(1) {
+    if((xr & (1 << bitNum)) != 0) break;
+    else bitNum++;
+  }
+  // bitNum logic shortcut
+  // int bitNum = xr & ~(xr -1);
+
+  int zeroGp = 0;
+  int oneGp = 0;
+
+  for(int i = 0; i < n; i++) {
+    if((nums[i] & (1 << bitNum)) == 0) zeroGp = zeroGp ^ nums[i];
+    else oneGp = oneGp ^ nums[i];
+  }
+
+  for(int i = 1; i <= n; i++) {
+    if((i & (1 << bitNum)) == 0) zeroGp = zeroGp ^ i;
+    else oneGp = oneGp ^ i;
+  }
+
+  int cnt = 0;
+  for(int i = 0; i < n; i++) {
+    if(nums[i] == zeroGp) cnt++;
+  }
+
+  if(cnt == 2) return {zeroGp, oneGp}; // {repeating, missing}
+
+  return {oneGp, zeroGp};
+}
+
 int main() {
   vector<int> nums = {3, 5, 4, 1, 1};
 
@@ -83,7 +126,9 @@ int main() {
 
   // vector<int> ans = solutionBetter(nums);
 
-  vector<int> ans = solutionOptimal_1(nums);
+  // vector<int> ans = solutionOptimal_1(nums);
+
+  vector<int> ans = solutionOptimal_2(nums);
   for(auto i : ans) {
     cout << i << " ";
   } cout << endl;
