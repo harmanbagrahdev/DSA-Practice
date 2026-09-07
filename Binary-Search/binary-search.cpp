@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// T = O()
+// T = O(log(n))
 // S = O(1)
 string binarySearch(vector<int>& arr, int target) {
   int n = arr.size();
