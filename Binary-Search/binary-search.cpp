@@ -1,45 +1,41 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Iterative version
 // T = O(log(n))
 // S = O(1)
-string binarySearch(vector<int>& arr, int target) {
+int binarySearch(vector<int>& arr, int &target) {
   int n = arr.size();
-  int start = 0;
-  int end = n-1;
-  int mid = (start + end) / 2;
-
-  while(start <= end && arr[mid] != target) {
-    if(target < arr[mid]) {
-      end = mid-1;
-    }
-    else {
-      start = mid + 1;
-    }
-
-    mid = (start + end) / 2;
+  int low = 0;
+  int high = n-1;
+  
+  while(low <= high) {
+    int mid = (low + high) / 2;
+    if(arr[mid] == target) return mid;
+    else if(target < arr[mid]) high = mid-1;
+    else low = mid + 1;
   }
+  return -1;
+}
 
-  if(arr[mid] == target) {
-    cout << mid << endl;
-    return "found";
-  }
+// Recursive version
+// T = O(log(n))
+// S = O(1)
+int binarySearchRecursion(vector<int>& arr, int& target, int low, int high) {
+  int n = arr.size();
+  if(low > high) return -1;
 
-  return "not found";
+  int mid = (low + high) / 2;
+  if(arr[mid] == target) return mid;
+  else if(target > arr[mid]) return binarySearchRecursion(arr, target, mid+1, high);
+  return binarySearchRecursion(arr, target, low, mid-1);
 }
 
 int main() {
-  int n;
-  cin >> n;
-  vector<int> arr(n);
-  cout << "Enter array elements : ";
-  for(int i = 0; i < n; i++) {
-    cin >> arr[i];
-  }
+  vector<int> arr = {3, 4, 6, 7, 9, 12, 16, 17};
+  int target = 6;
 
-  int target;
-  cout << "Enter an element to search in array : ";
-  cin >> target;
+  // cout << binarySearch(arr, target) << endl;
 
-  cout << binarySearch(arr, target) << endl;
+  cout << binarySearchRecursion(arr, target, 0, arr.size() - 1) << endl;
 }
