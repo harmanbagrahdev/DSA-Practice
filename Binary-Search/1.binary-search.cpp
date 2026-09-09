@@ -25,7 +25,9 @@ int binarySearchRecursion(vector<int>& arr, int& target, int low, int high) {
   int n = arr.size();
   if(low > high) return -1;
 
-  int mid = (low + high) / 2;
+  // In case the search space is from 0 to INT16_MAX then mid can overflow so we can use long long or just apply a mathematical tweaking!
+  // int mid = (low + high) / 2;
+  int mid = low + (high - low) / 2;
   if(arr[mid] == target) return mid;
   else if(target > arr[mid]) return binarySearchRecursion(arr, target, mid+1, high);
   return binarySearchRecursion(arr, target, low, mid-1);
