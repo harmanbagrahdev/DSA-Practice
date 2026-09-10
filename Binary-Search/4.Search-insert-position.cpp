@@ -3,6 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// My solution : Brute Force
 // T = O(n)
 // S = O(1)
 int searchPosBrute(vector<int>& nums, int x) {
@@ -25,9 +26,35 @@ int searchPosBrute(vector<int>& nums, int x) {
   return pos;
 }
 
+// Optimal solution
+// Just lower bound algorithm will do it!
+// T = O(log(n))
+// S = O(1)
+int searchPosOptimal(vector<int>& nums, int x) {
+  int n = nums.size();
+  int pos = n; // if x is greater than all elements
+  int low = 0, high = n-1;
+
+  while(low <= high) {
+    int mid = (low + high) / 2;
+
+    if(x <= nums[mid]) {
+      pos = mid;
+      high = mid-1;
+    }
+    else {
+      low = mid+1;
+    }
+  }
+
+  return pos;
+}
+
 
 int main() {
   vector<int> nums = {3,5,8,15,19};
 
-  cout << searchPosBrute(nums, 20) << endl;
+  // cout << searchPosBrute(nums, 20) << endl;
+
+  cout << searchPosOptimal(nums, 2) << endl;
 }
