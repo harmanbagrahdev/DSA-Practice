@@ -57,8 +57,6 @@ void bs(vector<int>& nums, int& target, int& el, bool findFirst) {
     }
     else high = mid - 1;
   }
-  
-  // ans.push_back(el);
 }
 
 vector<int> lastOccurenceOptimal(vector<int> &nums, int &target) {
@@ -67,6 +65,7 @@ vector<int> lastOccurenceOptimal(vector<int> &nums, int &target) {
   vector<int> ans;
 
   bs(nums, target, last, true);
+  if(last == -1) return {-1, -1};
   bs(nums, target, first, false);
 
   ans.push_back(first);
