@@ -31,6 +31,18 @@ int minEatingSpeed(vector<int>& arr, int h) {
   return maxVal;
 }
 
+// int minEatingSpeedOptimal(vector<int>& arr, int h) {
+//   int low = 0;
+//   int high = *max_element(arr.begin(), arr.end());
+
+//   while(low <= high) {
+//     int mid = (low + high) / 2;
+//     int hours = calculatetotalhrs(arr, )
+
+//     if()
+//   }
+// }
+
 int main() {
   vector<int> arr = {7, 15, 6, 3};
   int h = 8;

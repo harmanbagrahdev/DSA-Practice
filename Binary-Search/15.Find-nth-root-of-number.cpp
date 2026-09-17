@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// pow() fn takes log(n) time!
+
 // Brute Force
 // T = O(n)
 // S = O(1)
@@ -10,29 +12,30 @@ int nthRoot(int m, int n) {
   int ans = 0;
   for(int i = 1; i <= m; i++) {
     if(pow(i, n) <= m) ans = max(ans, i);
+    else if(pow(i, n) > m) break;
   }
 
   return ans;
 }
 
 // Optimal solution
-// T = O(log(n))
+// T = O(log(m)) * O(log(n))
 // S = O(1)
 int nthRootOptimal(int m, int n) {
   int low = 1, high = m;
   
   while(low <= high) {
-    int ans = 1;
+    // int ans = 1;
     int mid = (low + high) / 2;
 
-    for(int i = 1; i <= n; i++) {
-      ans *= mid;
+    // for(int i = 1; i <= n; i++) {
+    //   ans *= mid;
 
-      if(ans > m) break;
-    }
+    //   if(ans > m) break;
+    // }
 
-    if(ans == m) return mid;
-    else if(ans < m) low = mid+1; 
+    if(pow(mid, n) == m) return mid;
+    else if(pow(mid, n) < m) low = mid+1; 
     else high = mid-1;
   }
 
