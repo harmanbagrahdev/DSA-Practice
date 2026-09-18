@@ -5,18 +5,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Brute Force
-// T = O(n * max(arr[i]) )
-// S = O(1)
+// T = O( max(arr[i]) )
 int calculatetotalhrs(vector<int>& arr, int hourly) {
   int totalhrs = 0;
-  for (int pile : arr) {
-    totalhrs += (pile + hourly - 1) / hourly;
+  for (auto pile : arr) {
+    totalhrs += ceil( (double)pile / (double)hourly);
   }
-
+  
   return totalhrs;
 }
 
+// Brute Force
+// T = O(n * max(arr[i]) )
+// S = O(1)
 int minEatingSpeed(vector<int>& arr, int h) {
   int maxVal = *max_element(arr.begin(), arr.end());
 
@@ -31,21 +32,30 @@ int minEatingSpeed(vector<int>& arr, int h) {
   return maxVal;
 }
 
-// int minEatingSpeedOptimal(vector<int>& arr, int h) {
-//   int low = 0;
-//   int high = *max_element(arr.begin(), arr.end());
+// Optimal solution
+// T = O(n) * O( log(max(arr[i])) )
+// S = O(1)
+int minEatingSpeedOptimal(vector<int>& arr, int h) {
+  int low = 1;
+  int high = *max_element(arr.begin(), arr.end()); // O(n)
 
-//   while(low <= high) {
-//     int mid = (low + high) / 2;
-//     int hours = calculatetotalhrs(arr, )
+  while(low <= high) {
+    int mid = (low + high) / 2;
+    int hours = calculatetotalhrs(arr, mid);
 
-//     if()
-//   }
-// }
+    if(hours == h) return mid;
+    else if(hours < h) high = mid-1;
+    else low = mid+1;
+  }
+
+  return low;
+}
 
 int main() {
-  vector<int> arr = {7, 15, 6, 3};
-  int h = 8;
+  vector<int> arr = {312884470};
+  int h = 312884469;
 
-  cout << minEatingSpeed(arr, h) << endl;
+  // cout << minEatingSpeed(arr, h) << endl;
+
+  cout << minEatingSpeedOptimal(arr, h) << endl;
 }
