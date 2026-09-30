@@ -23,6 +23,43 @@ int rowWithMaxOnes(vector<vector<int>>& matrix, int m, int n) {
   return maxRowIndex;
 }
 
+// T = O(log(m))
+int lowerBound(vector<int>& arr, int x) {
+  int low = 0, high = arr.size()-1;
+  int ans = arr.size();
+  while(low <= high) {
+    int mid = (low + high) / 2;
+
+    if(arr[mid] >= x) {
+      ans = mid;
+      high = mid-1;
+    }
+
+    else low = mid+1;
+  }
+
+  return ans;
+}
+
+// Optimal Solution
+// T = O(n * log(m))
+// S = O(1)
+int rowWithMaxOnesOptimal(vector<vector<int>>& matrix, int m, int n) {
+  int maxCnt = 0;
+  int maxRowIndex = -1;
+  for(int i = 0; i < m; i++) {
+    int cnt = 0;
+    int countOnes = m - lowerBound(matrix[i], 1);
+
+    if(cnt > maxCnt) {
+      maxCnt = cnt;
+      maxRowIndex = i;
+    }
+  }
+
+  return maxRowIndex;
+}
+
 int main() {
   int m = 3;
   int n = 3;

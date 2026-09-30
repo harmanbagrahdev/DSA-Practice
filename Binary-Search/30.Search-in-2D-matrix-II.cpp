@@ -18,6 +18,40 @@ bool searchMatrix(vector<vector<int>> &matrix, int target)
   return false;
 }
 
+// T = O(log(m))
+int lowerBound(vector<int>& arr, int x) {
+  int low = 0, high = arr.size()-1;
+  int ans = arr.size();
+  while(low <= high) {
+    int mid = (low + high) / 2;
+
+    if(arr[mid] >= x) {
+      ans = mid;
+      high = mid-1;
+    }
+
+    else low = mid+1;
+  }
+
+  return ans;
+}
+
+// Better Solution
+// T = O(n * log(m))
+// S = O(1)
+vector<int> searchMatrixBetter(vector<vector<int>>& matrix, int target) {
+  int m = matrix.size();
+  for(int i = 0; i < m; i++) {
+    int rowIndex = lowerBound(matrix[i], target);
+
+    if(rowIndex != -1 && matrix[i][rowIndex] == target) {
+      return {i, rowIndex};
+    }
+  }
+
+  return {-1, -1};
+}
+
 int main()
 {
   int m = 5;
@@ -32,5 +66,11 @@ int main()
   };
   int target = 5;
 
-  cout << searchMatrix(matrix, target) << endl;
+  // cout << searchMatrix(matrix, target) << endl;
+
+  vector<int> ans = searchMatrixBetter(matrix, target);
+  for(auto i : ans) {
+    cout << i << " ";
+  }
+  cout << endl;
 }
