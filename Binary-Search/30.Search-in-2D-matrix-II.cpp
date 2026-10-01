@@ -52,6 +52,26 @@ vector<int> searchMatrixBetter(vector<vector<int>>& matrix, int target) {
   return {-1, -1};
 }
 
+// Optimal solution
+// T = O(n + m)
+// S = O(1)
+pair<int, int> searchMatrixOptimal(vector<vector<int>>& matrix, int target) {
+  if(matrix.empty() || matrix[0].empty()) return {-1, -1};
+
+  int row = matrix.size();
+  int col = matrix[0].size();
+
+  int r = 0;
+  int c = col - 1;
+  while(r < row && c >= 0) {
+    if(target == matrix[r][c]) return {r, c};
+    else if(target < matrix[r][c]) c --;
+    else r ++;
+  }
+
+  return {-1, -1};
+}
+
 int main()
 {
   int m = 5;
@@ -68,9 +88,12 @@ int main()
 
   // cout << searchMatrix(matrix, target) << endl;
 
-  vector<int> ans = searchMatrixBetter(matrix, target);
-  for(auto i : ans) {
-    cout << i << " ";
-  }
-  cout << endl;
+  // vector<int> ans = searchMatrixBetter(matrix, target);
+  // for(auto i : ans) {
+  //   cout << i << " ";
+  // }
+  // cout << endl;
+
+  auto [row, col] = searchMatrixOptimal(matrix, target);
+  cout << row << " " << col << endl;
 }
