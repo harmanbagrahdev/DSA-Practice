@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Optimal Solution
+// T = O(log(n))
+// S = O(1)
 double myPow(double x, int n)
 {
   double ans = 1;
